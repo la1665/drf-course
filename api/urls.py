@@ -1,14 +1,16 @@
-from django.urls import path
-from . import views
+from xml.etree.ElementInclude import include
+from django.urls import path, include
+from rest_framework import routers
 
+from . import views
 
 app_name = "api"
 
+router = routers.SimpleRouter()
+router.register('', views.ArticleViewSet, basename='Article')
+router.register('users', views.UserVIewSet, basename='User')
+
 urlpatterns = [
-    path('', views.ArticleList.as_view(), name="list"),
-    path('<int:pk>/', views.ArticleDetail.as_view(), name="detail"),
-    path('users/', views.UserList.as_view(), name="user-list"),
-    path('users/<int:pk>/', views.UserDetail.as_view(), name="user-detail"),
-    # path('revoke/', views.RevokeToken.as_view()),
+    path("", include(router.urls)),
 
 ]
