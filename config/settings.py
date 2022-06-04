@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     
     # 3rd party:
+    'django_filters',
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
@@ -146,7 +147,10 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.TokenAuthentication',
         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-    ]
+    ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'
+    ],
+    
 }
 
 REST_USE_JWT = True

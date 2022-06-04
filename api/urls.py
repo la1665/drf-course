@@ -7,8 +7,8 @@ from . import views
 app_name = "api"
 
 router = routers.SimpleRouter()
-router.register('', views.ArticleViewSet, basename='Article')
-router.register('users', views.UserVIewSet, basename='User')
+router.register('articles', views.ArticleViewSet, basename='articles')
+router.register('users', views.UserVIewSet, basename='users')
 
 urlpatterns = [
     path("", include(router.urls)),
