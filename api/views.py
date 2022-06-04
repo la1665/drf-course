@@ -35,10 +35,3 @@ class UserDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = Userserializer
     permission_classes = (IsSuperUserOrStaffReadOnly, )
 
-
-# class RevokeToken(APIView):
-#     permission_classes = (IsAuthenticated,)
-
-#     def delete(self, request):
-#         request.auth.delete()
-#         return Response(status=204)
