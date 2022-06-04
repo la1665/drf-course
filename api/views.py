@@ -1,25 +1,31 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
-
 from django.contrib.auth.models import User
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import  IsAuthenticated
+# from rest_framework.views import APIView
+# from rest_framework.response import Response
+
+from blog.models import Article
 from .serializers import ArticleSerializer, Userserializer
 from .permissions import IsSuperUser, IsAuthorOrReadOnly, IsStaffOrReadOnly, IsSuperUserOrStaffReadOnly
-from blog.models import Article
 
 
 class ArticleList(ListCreateAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = (IsAuthenticated,)
+    
 
 class ArticleDetail(RetrieveUpdateDestroyAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = (IsAuthenticated, IsStaffOrReadOnly, IsAuthorOrReadOnly)
+    permission_classes = (IsStaffOrReadOnly, IsAuthorOrReadOnly)
 
 
 class UserList(ListCreateAPIView):
-    queryset = User.objects.all()
+    def get_queryset(self):
+        print(self.request.user)
+        print(self.request.auth)  
+        print("----------------")
+        return User.objects.all()
     serializer_class = Userserializer
     permission_classes = (IsSuperUserOrStaffReadOnly, )
 
@@ -29,3 +35,10 @@ class UserDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = Userserializer
     permission_classes = (IsSuperUserOrStaffReadOnly, )
 
+
+# class RevokeToken(APIView):
+#     permission_classes = (IsAuthenticated,)
+
+#     def delete(self, request):
+#         request.auth.delete()
+#         return Response(status=204)
